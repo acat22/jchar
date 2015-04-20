@@ -55,18 +55,19 @@
 		if (obj && callback) o.on(obj, callback);
 		return o;
 	}
-
+	
+	var chartypedname = '_chartyped_for_jquery.Jchar.js';
     $.fn.onchar = function(callback) {
 		
-		var o = this.data('_chartyped');
+		var o = this.data(chartypedname);
 		if (!callback) {
 			if (o) o.off();
-			this.data('_chartyped', null);
+			this.data(chartypedname, null);
 			o = null;
 		} else
 		if (!o) {
 			o = new CharTyped(this.get(0), callback);
-			this.data('_chartyped', o);
+			this.data(chartypedname, o);
 		}
         return this;
  
