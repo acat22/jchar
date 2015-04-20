@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="jchar.js"></script>
+<script language="javascript" src="/mb21/test/web/app/jquery-1.9.1.min.js"></script>
+<script language="javascript" src="jquery.Jchar.js"></script>
+</head>
+
+<body>
+
+<textarea id="area"></textarea>
+
+<script>
+/*
+var jc = new CharTyped(document.getElementById('area'), cb);
+//jc.on(document.getElementById('area'), cb);
+
+function cb(chara) {
+	//console.log(chara);
+	if (chara == '@') console.log('yey');
+}
+*/
+$().ready(function() {
+	$('#area').onchar(cb);
+});
+
+function cb(chara) {
+	console.log(chara);
+	if (chara == '@') console.log('yey');
+}
+
+function off() {
+	$('#area').onchar();
+}
+</script>
+
+<input type="button" value="Off" onclick="off()" />
+
+</body>
+</html>
