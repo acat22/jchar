@@ -8,6 +8,7 @@
 			},
 			obj : null,
 			onKeyPressed : function(event) {
+				event = event || window.event;
 				var yes = 1;
 				if (event.keyCode == 13) yes = 0;
 				var pos = this.obj.selectionStart;
@@ -25,24 +26,15 @@
 				if (yes) this.callback(ch);
 			},
 			off : function() {
-				this.on(this.obj, this.callback, true);
+				if (window.removeEventListener){
+					this.obj.removeEventListener("keyup", this.cb, false);
+				} else {
+					this.obj.detachEvent("onkeyup", this.cb);
+				}
+				this.obj = null;
+				this.callback = null;
 			},
-			on : function(obj, callback, rem) {
-				var o = this;
-				if (!this.cb) this.cb = function (event) {
-					event = event || window.event;
-					o.onKeyPressed(event);
-				}
-				if (rem) {
-					if (window.removeEventListener){
-						this.obj.removeEventListener("keyup", this.cb, false);
-					} else {
-						this.obj.detachEvent("onkeyup", this.cb);
-					}
-					this.obj = null;
-					this.callback = null;
-					return;
-				}
+			on : function(obj, callback) {
 				this.obj = obj;
 				this.callback = callback;
 				if (window.addEventListener){
@@ -51,6 +43,9 @@
 					this.obj.attachEvent("onkeyup", this.cb);
 				}
 			}
+		};
+		o.cb = function (event) {
+			o.onKeyPressed(event);
 		};
 		if (obj && callback) o.on(obj, callback);
 		return o;
